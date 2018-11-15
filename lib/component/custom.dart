@@ -3,12 +3,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class MyPainter extends CustomPainter {
-  double width;
-  List<double> percents;
-  Paint _line;
-  var _random = new Random();
+  final double width;
+  final List<double> percents;
+  final List<Color> colors;
 
-  MyPainter({this.percents, this.width}) {
+  Paint _line;
+
+  MyPainter(this.colors, this.percents, this.width) {
+    assert(colors.length == percents.length);
     _line = new Paint()
       ..color = Colors.white
       ..strokeCap = StrokeCap.round
@@ -49,17 +51,9 @@ class MyPainter extends CustomPainter {
 
   Paint _getColorLine(int index) {
     return new Paint()
-      ..color = _randomColor()
+      ..color = colors[index]
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
       ..strokeWidth = width;
-  }
-
-  Color _randomColor(){
-    var a = 255; // alpha = 0..255
-    var r = _random.nextInt(256); // red = 0..255
-    var g = _random.nextInt(256); // green = 0..255
-    var b = _random.nextInt(256); // blue = 0..255
-    return Color.fromARGB(a, r, g, b);
   }
 }

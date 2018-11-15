@@ -1,5 +1,5 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
-
 import 'custom.dart';
 
 class MyApp extends StatelessWidget {
@@ -27,6 +27,18 @@ class _MyHomePageState extends State<MyHomePage> {
   static var count = 6;
   List<double> _values = List.filled(count, 0.0);
 
+  List<Color> _colors;
+  final _random = new Random();
+
+  _MyHomePageState() {
+    _init();
+  }
+
+  void _init() {
+    _colors = List<Color>.generate(count, (_) => _randomColor());
+    _values = List.filled(count, 0.0);
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = [];
@@ -38,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
             width: 300,
             height: 300,
             child: CustomPaint(
-              foregroundPainter: MyPainter(width: 32.0, percents: _values),
+              foregroundPainter: MyPainter(_colors, _values, 32.0),
               child: new Padding(
                 padding: const EdgeInsets.all(40.0),
                 child: new RaisedButton(
@@ -48,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: new Text("Reset"),
                   onPressed: () {
                     setState(() {
-                      _values = List.filled(count, 0.0);
+                      _init();
                     });
                   },
                 ),
@@ -93,5 +105,13 @@ class _MyHomePageState extends State<MyHomePage> {
       amount += value;
     });
     return 100 - amount;
+  }
+
+  Color _randomColor() {
+    var a = 255; // alpha = 0..255
+    var r = _random.nextInt(256); // red = 0..255
+    var g = _random.nextInt(256); // green = 0..255
+    var b = _random.nextInt(256); // blue = 0..255
+    return Color.fromARGB(a, r, g, b);
   }
 }
