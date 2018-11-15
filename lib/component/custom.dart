@@ -6,9 +6,7 @@ class MyPainter extends CustomPainter {
   double width;
   List<double> percents;
   Paint _line;
-
-  final List<MaterialColor> _colors =
-      [Colors.red, Colors.green, Colors.yellow, Colors.blue].reversed.toList();
+  var _random = new Random();
 
   MyPainter({this.percents, this.width}) {
     _line = new Paint()
@@ -51,11 +49,17 @@ class MyPainter extends CustomPainter {
 
   Paint _getColorLine(int index) {
     return new Paint()
-      ..color = (index < _colors.length)
-          ? _colors[index]
-          : _colors[index % _colors.length]
+      ..color = _randomColor()
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
       ..strokeWidth = width;
+  }
+
+  Color _randomColor(){
+    var a = 255; // alpha = 0..255
+    var r = _random.nextInt(256); // red = 0..255
+    var g = _random.nextInt(256); // green = 0..255
+    var b = _random.nextInt(256); // blue = 0..255
+    return Color.fromARGB(a, r, g, b);
   }
 }
