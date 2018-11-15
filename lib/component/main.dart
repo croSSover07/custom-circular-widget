@@ -24,7 +24,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<double> _values = [0, 0, 0, 0];
+
+  static var count = 6;
+  List<double> _values = List.filled(count, 0.0);
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +46,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Colors.purple,
                   splashColor: Colors.blueAccent,
                   shape: new CircleBorder(),
-                  child: new Text("Click"),
-                  onPressed: () {},
+                  child: new Text("Reset"),
+                  onPressed: () {
+                    setState(() {
+                      _values = List.filled(count, 0.0);
+                    });
+                  },
                 ),
               ),
             )),
