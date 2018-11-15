@@ -29,6 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Color> _colors;
   final _random = new Random();
+  int _radioValue = 0;
 
   _MyHomePageState() {
     _init();
@@ -43,6 +44,23 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     List<Widget> widgets = [];
 
+    widgets.addAll([
+      Row(
+        children: <Widget>[
+          Radio(
+              value: 0,
+              groupValue: _radioValue,
+              onChanged: _handleRadioValueChange),
+          Text("Round corner"),
+          Radio(
+              value: 1,
+              groupValue: _radioValue,
+              onChanged: _handleRadioValueChange),
+          Text("Square corner")
+        ],
+      ),
+    ]);
+
     widgets.add(Center(
       child: Padding(
         padding: const EdgeInsets.all(40.0),
@@ -50,7 +68,8 @@ class _MyHomePageState extends State<MyHomePage> {
             width: 300,
             height: 300,
             child: CustomPaint(
-              foregroundPainter: MyPainter(_colors, _values, 32.0),
+              foregroundPainter: MyPainter(_colors, _values, 32.0,
+                  _radioValue == 0 ? StrokeCap.round : StrokeCap.butt),
               child: new Padding(
                 padding: const EdgeInsets.all(40.0),
                 child: new RaisedButton(
@@ -113,5 +132,11 @@ class _MyHomePageState extends State<MyHomePage> {
     var g = _random.nextInt(256); // green = 0..255
     var b = _random.nextInt(256); // blue = 0..255
     return Color.fromARGB(a, r, g, b);
+  }
+
+  void _handleRadioValueChange(int value) {
+    setState(() {
+      _radioValue = value;
+    });
   }
 }

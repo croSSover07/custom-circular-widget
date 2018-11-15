@@ -6,14 +6,14 @@ class MyPainter extends CustomPainter {
   final double width;
   final List<double> percents;
   final List<Color> colors;
+  final StrokeCap lineStrokeCap;
 
   Paint _line;
 
-  MyPainter(this.colors, this.percents, this.width) {
+  MyPainter(this.colors, this.percents, this.width, this.lineStrokeCap) {
     assert(colors.length == percents.length);
     _line = new Paint()
       ..color = Colors.white
-      ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
       ..strokeWidth = width;
   }
@@ -52,7 +52,9 @@ class MyPainter extends CustomPainter {
   Paint _getColorLine(int index) {
     return new Paint()
       ..color = colors[index]
-      ..strokeCap = StrokeCap.round
+      ..strokeCap = lineStrokeCap
+      ..strokeJoin = StrokeJoin.round
+      ..strokeMiterLimit = 1000.0
       ..style = PaintingStyle.stroke
       ..strokeWidth = width;
   }
