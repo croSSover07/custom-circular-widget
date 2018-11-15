@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'custom.dart';
 
 class MyApp extends StatelessWidget {
@@ -34,11 +35,8 @@ class _MyHomePageState extends State<MyHomePage> {
               width: 300,
               height: 300,
               child: CustomPaint(
-                foregroundPainter: MyPainter(
-                    lineColor: Colors.yellow,
-                    completeColor: Colors.red,
-                    width: 30.0,
-                    completePercent: 45.0),
+                foregroundPainter:
+                    MyPainter(width: 32.0, percents: [10.0, 20.0, 30.0, 10.0]),
                 child: new Padding(
                   padding: const EdgeInsets.all(40.0),
                   child: new RaisedButton(
