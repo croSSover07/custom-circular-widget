@@ -6,11 +6,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Circular View',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Circular View'),
     );
   }
 }
@@ -24,30 +24,66 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<double> _values = [0, 0, 0, 0];
+
   @override
   Widget build(BuildContext context) {
+    List<Widget> widgets = [];
+
+    widgets.add(Center(
+      child: Padding(
+        padding: const EdgeInsets.all(40.0),
+        child: Container(
+            width: 300,
+            height: 300,
+            child: CustomPaint(
+              foregroundPainter: MyPainter(width: 32.0, percents: _values),
+              child: new Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: new RaisedButton(
+                  color: Colors.purple,
+                  splashColor: Colors.blueAccent,
+                  shape: new CircleBorder(),
+                  child: new Text("Click"),
+                  onPressed: () {},
+                ),
+              ),
+            )),
+      ),
+    ));
+    _values.asMap().forEach((index, item) {
+      widgets.add(Row(children: <Widget>[
+        Expanded(
+          child: Slider(
+            value: item,
+            onChanged: (value) {
+              setState(() {
+                _values[index] = value;
+              });
+            },
+            min: 0,
+            max: item + _leftValue(),
+          ),
+        ),
+        Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("${item.toStringAsFixed(1)}%"))
+      ]));
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-          child: Container(
-              width: 300,
-              height: 300,
-              child: CustomPaint(
-                foregroundPainter:
-                    MyPainter(width: 32.0, percents: [10.0, 20.0, 30.0, 10.0]),
-                child: new Padding(
-                  padding: const EdgeInsets.all(40.0),
-                  child: new RaisedButton(
-                    color: Colors.purple,
-                    splashColor: Colors.blueAccent,
-                    shape: new CircleBorder(),
-                    child: new Text("Click"),
-                    onPressed: () {},
-                  ),
-                ),
-              ))),
+      body: Column(children: widgets),
     );
+  }
+
+  double _leftValue() {
+    var amount = 0.0;
+    _values.forEach((value) {
+      amount += value;
+    });
+    return 100 - amount;
   }
 }

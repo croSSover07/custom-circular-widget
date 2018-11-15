@@ -21,7 +21,7 @@ class MyPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Offset center = new Offset(size.width / 2, size.height / 2);
-    double radius = min(size.width / 2, size.height / 2);
+    double radius = min(size.width / 2, size.height / 2) - width / 2;
     var rect = new Rect.fromCircle(center: center, radius: radius);
     canvas.drawCircle(center, radius, _line);
 
