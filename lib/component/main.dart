@@ -24,7 +24,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   static var count = 6;
   List<double> _values = List.filled(count, 0.0);
 
@@ -73,7 +72,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text("${item.toStringAsFixed(1)}%"))
+            child: Container(
+                width: 40,
+                height: 16,
+                child: Text("${item.toStringAsFixed(1)}%")))
       ]));
     });
 
